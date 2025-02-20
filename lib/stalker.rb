@@ -20,7 +20,7 @@ module Stalker
   end
 
   class Configuration
-    attr_accessor :whitelist_ips, :node_bin, :npm_bin, :yarn_bin, :bun_bin, :elasticsearch_url, :meilisearch_url
+    attr_accessor :client_ip_header, :whitelist_ips, :node_bin, :npm_bin, :yarn_bin, :bun_bin, :elasticsearch_url, :meilisearch_url
 
     def initialize
       @whitelist_ips = []
