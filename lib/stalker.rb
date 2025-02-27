@@ -2,8 +2,8 @@
 
 require 'stalker/bun'
 require 'stalker/bundler'
-require 'stalker/debian'
 require 'stalker/engine'
+require 'stalker/linux'
 require 'stalker/npm'
 require 'stalker/ruby'
 require 'stalker/version'
