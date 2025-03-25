@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.version     = Stalker::VERSION
   spec.authors     = ['Kevyn Lebouille']
   spec.email       = ['kevyn.lebouille@opsone.net']
-  spec.homepage    = 'https://github.com/opsone/stalker-gem'
+  spec.homepage    = 'https://github.com/opsone/stalker-rails'
   spec.summary     = 'Summary of Stalker.'
   spec.description = 'Description of Stalker.'
   spec.license     = 'MIT'
