@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
 Stalker.configure do |config|
-  config.whitelist_ips = ['x.x.x.x']
+  # Keep it false if you want to disable the access token
+  config.access_token = false
 end
