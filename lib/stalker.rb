@@ -2,8 +2,10 @@
 
 require 'stalker/bun'
 require 'stalker/bundler'
+require 'stalker/elasticsearch'
 require 'stalker/engine'
 require 'stalker/linux'
+require 'stalker/meilisearch'
 require 'stalker/npm'
 require 'stalker/ruby'
 require 'stalker/version'
@@ -28,8 +30,8 @@ module Stalker
       @npm_bin = 'npm'
       @yarn_bin = 'yarn'
       @bun_bin = 'bun'
-      @elasticsearch_url = ENV['ELASTICSEARCH_URL']
-      @meilisearch_url = ENV['MEILISEARCH_URL']
+      @elasticsearch_url = ENV['ELASTICSEARCH_URL'].presence
+      @meilisearch_url = ENV['MEILISEARCH_URL'].presence
     end
   end
 end

@@ -6,6 +6,8 @@ module Stalker
       data = Rails.cache.fetch('stalker_dependencies', expires_in: 5.minutes) do
         [
           Stalker::Linux.version,
+          Stalker::Elasticsearch.version,
+          Stalker::Meilisearch.version,
           Stalker::Ruby.version,
           Stalker::Bundler.version,
           Stalker::Bundler.dependencies,
