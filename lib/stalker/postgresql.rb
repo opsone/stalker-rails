@@ -11,7 +11,7 @@ module Stalker
     def self.version
       return unless enabled?
 
-      version = ActiveRecord::Base.connection.select_value('SHOW server_version')
+      version = ActiveRecord::Base.connection.select_value('SELECT split_part(current_setting(\'server_version\'), \' \', 1)')
 
       { name: 'postgresql', dep_type: 'db_server', version: version }
     end
