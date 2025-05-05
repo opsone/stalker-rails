@@ -9,6 +9,7 @@ module Stalker
           Stalker::Mysql.version,
           Stalker::Postgresql.version,
           Stalker::Sqlite.version,
+          Stalker::Redis.version,
           Stalker::Elasticsearch.version,
           Stalker::Meilisearch.version,
           Stalker::Ruby.version,
