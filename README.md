@@ -8,7 +8,7 @@ How to use my plugin.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "stalker"
+gem 'stalker', git: 'https://github.com/opsone/stalker-gem'
 ```
 
 And then execute:
@@ -16,9 +16,20 @@ And then execute:
 $ bundle
 ```
 
-Or install it yourself as:
+After that, execute:
 ```bash
-$ gem install stalker
+$ rails generate stalker:install
+```
+
+To finish, add the security token in your credentials file:
+```bash
+$ rails credentials:show 
+EDITOR='code --wait' rails credentials:edit
+```
+
+Set your token as the value of `stalker_token`
+```
+stalker_token: myMagicSecurityToken
 ```
 
 ## Contributing
