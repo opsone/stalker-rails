@@ -21,6 +21,11 @@ After that, execute:
 $ rails generate stalker:install
 ```
 
+Add the route to the module in the file `config/routes.rb`:
+```ruby
+mount Stalker::Engine => "/stalker"
+```
+
 To finish, add the security token in your credentials file:
 ```bash
 $ rails credentials:show 
