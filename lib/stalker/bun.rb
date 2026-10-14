@@ -2,8 +2,11 @@
 
 module Stalker
   class Bun
+    # bun.lock is the default text lockfile since Bun 1.2, bun.lockb the former binary one
+    LOCKFILES = %w[bun.lock bun.lockb].freeze
+
     def self.enabled?
-      Rails.root.join('bun.lockb').exist?
+      LOCKFILES.any? { |lockfile| Rails.root.join(lockfile).exist? }
     end
 
     def self.version
@@ -15,16 +18,7 @@ module Stalker
     def self.dependencies
       return unless enabled?
 
-      JSON.parse(Rails.root.join('package.json').read).yield_self do |data|
-        (data['dependencies'] || {}).merge(data['devDependencies'] || {})
-      end.yield_self do |specs|
-        Command.run(Stalker.configuration.bun_bin, 'pm', 'ls').lines.filter_map do |line|
-          if line.strip =~ /^(├──|└──) (.+)@([\d.]+)$/
-            _, name, version = Regexp.last_match.captures
-            { name: name, dep_type: 'node_module', version: version } if specs.key?(name)
-          end
-        end
-      end
+      NodePackages.parse(Command.run(Stalker.configuration.bun_bin, 'pm', 'ls'))
     end
   end
 end
