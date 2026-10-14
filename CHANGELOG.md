@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Depend on `railties`, `actionpack`, `activerecord` and `activesupport` instead of the `rails` meta-gem
+
 ## 0.9.0
 
 - Accept the token in an `Authorization: Bearer` header (`?token=` still works)

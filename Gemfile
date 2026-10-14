@@ -5,6 +5,9 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in stalker.gemspec.
 gemspec
 
+# The dummy app loads the whole framework (rails/all), the gem itself only depends on its components
+gem 'rails'
+
 gem 'puma'
 
 gem 'sqlite3'
