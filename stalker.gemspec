@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors     = ['Kevyn Lebouille']
   spec.email       = ['kevyn.lebouille@opsone.net']
   spec.homepage    = 'https://github.com/opsone/stalker-rails'
-  spec.summary     = 'Summary of Stalker.'
-  spec.description = 'Description of Stalker.'
+  spec.summary     = 'Exposes the versions of a Rails application runtime dependencies for monitoring.'
+  spec.description = 'Rails engine serving a JSON endpoint with the versions of the OS, database, Redis, search servers, Ruby, gems and Node packages an application runs on.'
   spec.license     = 'MIT'
 
   spec.metadata['homepage_uri'] = spec.homepage
@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.metadata['changelog_uri'] = spec.homepage + '/blob/main/CHANGELOG.md'
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
-    Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
+    Dir['{app,config,db,lib}/**/*', 'CHANGELOG.md', 'MIT-LICENSE', 'Rakefile', 'README.md']
   end
 
   spec.required_ruby_version = '>= 3.3.0'
