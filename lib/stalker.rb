@@ -2,6 +2,7 @@
 
 require 'stalker/bun'
 require 'stalker/bundler'
+require 'stalker/command'
 require 'stalker/elasticsearch'
 require 'stalker/engine'
 require 'stalker/linux'

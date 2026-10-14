@@ -12,7 +12,7 @@ module Stalker
       return unless enabled?
 
       if File.exist?('/etc/debian_version')
-        version = `cat /etc/debian_version`.strip
+        version = File.read('/etc/debian_version').strip
 
         { name: 'debian', dep_type: 'os', version: version }
       else

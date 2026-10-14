@@ -3,22 +3,22 @@
 module Stalker
   class Bun
     def self.enabled?
-      File.exist?('bun.lockb')
+      Rails.root.join('bun.lockb').exist?
     end
 
     def self.version
       return unless enabled?
 
-      { name: 'bun', dep_type: 'bun', version: `#{Stalker.configuration.bun_bin} -v`.strip }
+      { name: 'bun', dep_type: 'bun', version: Command.run(Stalker.configuration.bun_bin, '-v').strip }
     end
 
     def self.dependencies
       return unless enabled?
 
-      JSON.parse(`cat package.json`).yield_self do |data|
+      JSON.parse(Rails.root.join('package.json').read).yield_self do |data|
         (data['dependencies'] || {}).merge(data['devDependencies'] || {})
       end.yield_self do |specs|
-        `#{Stalker.configuration.bun_bin} pm ls`.lines.filter_map do |line|
+        Command.run(Stalker.configuration.bun_bin, 'pm', 'ls').lines.filter_map do |line|
           if line.strip =~ /^(├──|└──) (.+)@([\d.]+)$/
             _, name, version = Regexp.last_match.captures
             { name: name, dep_type: 'node_module', version: version } if specs.key?(name)
