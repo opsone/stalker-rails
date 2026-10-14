@@ -3,7 +3,7 @@
 module Stalker
   class Sqlite
     def self.enabled?
-      ActiveRecord::Base.connection.adapter_name == 'SQLite'
+      ActiveRecord::Base.connection_db_config.adapter == 'sqlite3'
     rescue
       false
     end
@@ -11,7 +11,7 @@ module Stalker
     def self.version
       return unless enabled?
 
-      version = ActiveRecord::Base.connection.select_value('SELECT sqlite_version()')
+      version = ActiveRecord::Base.connection_pool.with_connection { |connection| connection.select_value('SELECT sqlite_version()') }
 
       { name: 'sqlite', dep_type: 'db_server', version: version }
     end

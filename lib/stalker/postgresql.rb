@@ -3,7 +3,7 @@
 module Stalker
   class Postgresql
     def self.enabled?
-      ActiveRecord::Base.connection.adapter_name == 'PostgreSQL'
+      ActiveRecord::Base.connection_db_config.adapter == 'postgresql'
     rescue
       false
     end
@@ -11,7 +11,9 @@ module Stalker
     def self.version
       return unless enabled?
 
-      version = ActiveRecord::Base.connection.select_value('SELECT split_part(current_setting(\'server_version\'), \' \', 1)')
+      version = ActiveRecord::Base.connection_pool.with_connection do |connection|
+        connection.select_value("SELECT split_part(current_setting('server_version'), ' ', 1)")
+      end
 
       { name: 'postgresql', dep_type: 'db_server', version: version }
     end
