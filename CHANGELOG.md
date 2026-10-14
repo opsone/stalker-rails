@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.10.0
 
 - Accept the token in an `X-Stalker-Token` header, for sites behind HTTP basic auth
 - Depend on `railties`, `actionpack`, `activerecord` and `activesupport` instead of the `rails` meta-gem
