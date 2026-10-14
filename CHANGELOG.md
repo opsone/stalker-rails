@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- **OS: report the major release** (`VERSION_ID` from `/etc/os-release`), e.g. `13` instead of `13.4` on Debian
+
 ## 0.10.0
 
 - Accept the token in an `X-Stalker-Token` header, for sites behind HTTP basic auth

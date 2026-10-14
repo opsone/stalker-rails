@@ -11,15 +11,10 @@ module Stalker
     def self.version
       return unless enabled?
 
-      if File.exist?('/etc/debian_version')
-        version = File.read('/etc/debian_version').strip
+      os_release = parse_os_release(File.read(OS_RELEASE))
 
-        { name: 'debian', dep_type: 'os', version: version }
-      else
-        os_release = parse_os_release(File.read(OS_RELEASE))
-
-        { name: os_release['ID'], dep_type: 'os', version: os_release['VERSION_ID'] }
-      end
+      # VERSION_ID is the major release on Debian ("13"), unlike /etc/debian_version ("13.4")
+      { name: os_release['ID'], dep_type: 'os', version: os_release['VERSION_ID'] }
     end
 
     # Format spec: https://www.freedesktop.org/software/systemd/man/latest/os-release.html
