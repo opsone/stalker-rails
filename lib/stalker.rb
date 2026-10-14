@@ -31,7 +31,7 @@ module Stalker
   end
 
   class Configuration
-    attr_accessor :client_ip_header, :access_token, :node_bin, :npm_bin, :yarn_bin, :bun_bin, :redis_bin, :elasticsearch_url, :elasticsearch_ca_file, :meilisearch_url, :meilisearch_api_key, :redis_url
+    attr_accessor :access_token, :node_bin, :npm_bin, :yarn_bin, :bun_bin, :redis_bin, :elasticsearch_url, :elasticsearch_ca_file, :meilisearch_url, :meilisearch_api_key, :redis_url
 
     def initialize
       # nil (or blank) denies every request; set it to false to explicitly disable authentication
@@ -47,5 +47,9 @@ module Stalker
       @meilisearch_api_key = ENV['MEILISEARCH_API_KEY'].presence
       @redis_url = ENV['REDIS_URL'].presence
     end
+
+    # No effect since 0.3.0 (IP filtering replaced by access_token). Still accepted because existing initializers
+    # set it (e.g. HTTP_LB_CLIENTIP on Squark) and must keep booting
+    def client_ip_header=(_value); end
   end
 end

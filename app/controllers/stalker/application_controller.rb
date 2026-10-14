@@ -17,7 +17,12 @@ module Stalker
           return head :unauthorized
         end
 
-        head :unauthorized unless ActiveSupport::SecurityUtils.secure_compare(params[:token].to_s, access_token.to_s)
+        head :unauthorized unless ActiveSupport::SecurityUtils.secure_compare(request_token, access_token.to_s)
+      end
+
+      # The Authorization header keeps the token out of access logs; ?token= is kept for existing monitoring clients
+      def request_token
+        request.authorization.to_s[/\ABearer (.+)\z/, 1] || params[:token].to_s
       end
   end
 end
