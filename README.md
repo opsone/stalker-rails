@@ -8,7 +8,7 @@ How to use my plugin.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'stalker', git: 'https://github.com/opsone/stalker-gem'
+gem 'stalker', git: 'https://github.com/opsone/stalker-rails'
 ```
 
 And then execute:
