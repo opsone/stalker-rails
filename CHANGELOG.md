@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.10.1
 
 - **OS: report the major release** (`VERSION_ID` from `/etc/os-release`), e.g. `13` instead of `13.4` on Debian
 
