@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.9.0
 
 - Accept the token in an `Authorization: Bearer` header (`?token=` still works)
 - `client_ip_header` has had no effect since 0.3.0; it is still accepted so that existing initializers keep booting
