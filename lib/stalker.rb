@@ -17,11 +17,14 @@ require 'stalker/yarn'
 
 module Stalker
   class << self
-    attr_accessor :configuration
+    attr_writer :configuration
+  end
+
+  def self.configuration
+    @configuration ||= Configuration.new
   end
 
   def self.configure
-    self.configuration ||= Configuration.new
     yield configuration
   end
 
@@ -29,7 +32,8 @@ module Stalker
     attr_accessor :client_ip_header, :access_token, :node_bin, :npm_bin, :yarn_bin, :bun_bin, :redis_bin, :elasticsearch_url, :meilisearch_url, :redis_url
 
     def initialize
-      @access_token = false
+      # nil (or blank) denies every request; set it to false to explicitly disable authentication
+      @access_token = nil
       @node_bin = 'node'
       @npm_bin = 'npm'
       @yarn_bin = 'yarn'

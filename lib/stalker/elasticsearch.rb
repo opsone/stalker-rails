@@ -5,8 +5,10 @@ require 'net/http'
 
 module Stalker
   class Elasticsearch
+    TIMEOUT = 1
+
     def self.enabled?
-      Stalker.configuration.elasticsearch_url && Net::HTTP.start(uri.host, uri.port, read_timeout: 1) { |http| http.head('/').code == '200' }
+      Stalker.configuration.elasticsearch_url && request { |http| http.head('/') }.code == '200'
     rescue
       false
     end
@@ -14,15 +16,19 @@ module Stalker
     def self.version
       return unless enabled?
 
-      data = JSON.parse(Net::HTTP.get(uri))
+      data = JSON.parse(request { |http| http.get(uri.request_uri) }.body)
 
       { name: 'elasticsearch', dep_type: 'search_server', version: data['version']['number'] }
     end
 
-    private
+    def self.uri
+      URI(Stalker.configuration.elasticsearch_url)
+    end
+    private_class_method :uri
 
-      def self.uri
-        URI(Stalker.configuration.elasticsearch_url)
-      end
+    def self.request(&block)
+      Net::HTTP.start(uri.host, uri.port, open_timeout: TIMEOUT, read_timeout: TIMEOUT, &block)
+    end
+    private_class_method :request
   end
 end

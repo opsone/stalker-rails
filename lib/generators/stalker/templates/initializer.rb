@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Stalker.configure do |config|
-  # Set it to false if you want to disable the access token
+  # Required to access the endpoint (?token=...). Requests are denied when it is nil or blank.
+  # Set it to false to explicitly disable authentication.
   config.access_token = Rails.application.credentials.stalker_token
 end

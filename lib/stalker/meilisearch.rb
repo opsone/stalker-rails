@@ -5,8 +5,10 @@ require 'net/http'
 
 module Stalker
   class Meilisearch
+    TIMEOUT = 1
+
     def self.enabled?
-      Stalker.configuration.meilisearch_url && Net::HTTP.start(uri.host, uri.port, read_timeout: 1) { |http| http.get('/health').code == '200' }
+      Stalker.configuration.meilisearch_url && request { |http| http.get('/health') }.code == '200'
     rescue
       false
     end
@@ -14,15 +16,19 @@ module Stalker
     def self.version
       return unless enabled?
 
-      data = JSON.parse(Net::HTTP.get(uri))
+      data = JSON.parse(request { |http| http.get(uri.request_uri) }.body)
 
       { name: 'meilisearch', dep_type: 'search_server', version: data['pkgVersion'] }
     end
 
-    private
+    def self.uri
+      URI("#{Stalker.configuration.meilisearch_url}/version")
+    end
+    private_class_method :uri
 
-      def self.uri
-        URI("#{Stalker.configuration.meilisearch_url}/version")
-      end
+    def self.request(&block)
+      Net::HTTP.start(uri.host, uri.port, open_timeout: TIMEOUT, read_timeout: TIMEOUT, &block)
+    end
+    private_class_method :request
   end
 end
