@@ -30,7 +30,7 @@ module Stalker
   end
 
   class Configuration
-    attr_accessor :client_ip_header, :access_token, :node_bin, :npm_bin, :yarn_bin, :bun_bin, :redis_bin, :elasticsearch_url, :meilisearch_url, :meilisearch_api_key, :redis_url
+    attr_accessor :client_ip_header, :access_token, :node_bin, :npm_bin, :yarn_bin, :bun_bin, :redis_bin, :elasticsearch_url, :elasticsearch_ca_file, :meilisearch_url, :meilisearch_api_key, :redis_url
 
     def initialize
       # nil (or blank) denies every request; set it to false to explicitly disable authentication
@@ -41,6 +41,7 @@ module Stalker
       @bun_bin = 'bun'
       @redis_bin = 'redis-cli'
       @elasticsearch_url = ENV['ELASTICSEARCH_URL'].presence
+      @elasticsearch_ca_file = ENV['ELASTICSEARCH_CA_FILE'].presence
       @meilisearch_url = ENV['MEILISEARCH_URL'].presence
       @meilisearch_api_key = ENV['MEILISEARCH_API_KEY'].presence
       @redis_url = ENV['REDIS_URL'].presence

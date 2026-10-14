@@ -8,7 +8,7 @@ module Stalker
     TIMEOUT = 1
 
     def self.enabled?
-      Stalker.configuration.elasticsearch_url && request { |http| http.head('/') }.code == '200'
+      Stalker.configuration.elasticsearch_url && request(Net::HTTP::Head, '/').code == '200'
     rescue
       false
     end
@@ -16,7 +16,7 @@ module Stalker
     def self.version
       return unless enabled?
 
-      data = JSON.parse(request { |http| http.get(uri.request_uri) }.body)
+      data = JSON.parse(request(Net::HTTP::Get, uri.request_uri).body)
 
       { name: 'elasticsearch', dep_type: 'search_server', version: data['version']['number'] }
     end
@@ -26,8 +26,15 @@ module Stalker
     end
     private_class_method :uri
 
-    def self.request(&block)
-      Net::HTTP.start(uri.host, uri.port, open_timeout: TIMEOUT, read_timeout: TIMEOUT, &block)
+    # TLS follows the URL scheme, credentials come from the URL (https://user:password@host:9200)
+    def self.request(request_class, path)
+      request = request_class.new(path)
+      request.basic_auth(uri.decoded_user, uri.decoded_password) if uri.user
+
+      options = { use_ssl: uri.scheme == 'https', open_timeout: TIMEOUT, read_timeout: TIMEOUT }
+      options[:ca_file] = Stalker.configuration.elasticsearch_ca_file if Stalker.configuration.elasticsearch_ca_file
+
+      Net::HTTP.start(uri.host, uri.port, options) { |http| http.request(request) }
     end
     private_class_method :request
   end
