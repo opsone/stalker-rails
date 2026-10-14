@@ -37,7 +37,13 @@ stalker_token: myMagicSecurityToken
 curl -H 'Authorization: Bearer myMagicSecurityToken' https://example.com/stalker/dependencies
 ```
 
-The token can also be passed as a query parameter (`/stalker/dependencies?token=...`), but the header keeps it out of access logs.
+On a site protected by HTTP basic auth, the `Authorization` header already carries the basic credentials: send the token in `X-Stalker-Token` instead.
+
+```bash
+curl -u user:password -H 'X-Stalker-Token: myMagicSecurityToken' https://staging.example.com/stalker/dependencies
+```
+
+The token can also be passed as a query parameter (`/stalker/dependencies?token=...`), but headers keep it out of access logs. When several are given, `X-Stalker-Token` wins over `Authorization: Bearer`, which wins over `?token=`.
 
 Response (cached for 5 minutes):
 
