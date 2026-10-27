@@ -49,7 +49,7 @@ Response (cached for 5 minutes):
 
 ```json
 [
-  { "name": "debian", "dep_type": "os", "version": "12" },
+  { "name": "debian", "dep_type": "os", "version": "12.8" },
   { "name": "postgresql", "dep_type": "db_server", "version": "16.4" },
   { "name": "redis", "dep_type": "db_server", "version": "7.2.4" },
   { "name": "ruby", "dep_type": "ruby", "version": "3.3.6" },
@@ -73,7 +73,7 @@ Response (cached for 5 minutes):
 
 | Probe | Detected when | Source |
 |---|---|---|
-| OS | `/etc/os-release` exists | `ID` and `VERSION_ID` from `/etc/os-release` (major release on Debian) |
+| OS | `/etc/os-release` exists | `/etc/debian_version` on Debian, `/etc/os-release` otherwise |
 | PostgreSQL, MySQL/MariaDB, SQLite | Matching Active Record adapter (`postgresql`, `mysql2`/`trilogy`, `sqlite3`) | SQL query on the primary database |
 | Redis | `redis_url` is set | `redis-client` or `redis` gem when loaded, `redis-cli` otherwise |
 | Elasticsearch | `elasticsearch_url` is set and the server answers | HTTP API |

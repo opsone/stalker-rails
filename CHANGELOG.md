@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- **OS: report the Debian point release again** (`/etc/debian_version`), e.g. `13.4` instead of `13`: reverts 0.10.1
+
 ## 0.10.1
 
 - **OS: report the major release** (`VERSION_ID` from `/etc/os-release`), e.g. `13` instead of `13.4` on Debian
