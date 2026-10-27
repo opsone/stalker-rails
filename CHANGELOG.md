@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.10.2
 
 - **OS: report the Debian point release again** (`/etc/debian_version`), e.g. `13.4` instead of `13`: reverts 0.10.1
 
